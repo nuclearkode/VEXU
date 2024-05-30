@@ -1,4 +1,4 @@
-# C++ Code for Mechanum drive train test robot
+// c++ Code for Mechanum drive train test robot
 
 #include "main.h"
 using namespace pros;
