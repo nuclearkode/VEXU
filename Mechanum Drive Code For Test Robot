@@ -1,0 +1,68 @@
+# C++ Code for Mechanum drive train test robot
+
+#include "main.h"
+using namespace pros;
+using namespace std; // See if can remove the pros :: LCD thing
+
+void on_center_button();
+
+// Initialization function to set up the robot's components.
+void initialize() {
+    pros::lcd::initialize();
+    pros::lcd::set_text(1, "Hello PROS User!");
+    pros::lcd::register_btn1_cb(on_center_button);
+}
+
+// Autonomous function for autonomous mode.
+void autonomous() {}
+
+// Operator control function for manual control via the controller.
+void opcontrol() {
+    pros::Controller master(pros::E_CONTROLLER_MASTER);
+
+    // Define the motors. Replace 'x' with your actual motor ports.
+    pros::Motor frontLeft(12);   // Front left motor
+    pros::Motor frontRight(2);  // Front right motor
+    pros::Motor backLeft(11);    // Back left motor
+    pros::Motor backRight(1);   // Back right motor
+
+    // Correct motor directions depending on your physical setup
+    frontRight.set_reversed(true);
+    backRight.set_reversed(true);
+
+    while (true) {
+        // Read controller joysticks
+        int vertical = master.get_analog(ANALOG_LEFT_Y);   // Forward and backward
+        int horizontal = master.get_analog(ANALOG_LEFT_X); // Strafe left and right
+        int rotation = master.get_analog(ANALOG_RIGHT_X);  // Rotation
+
+        // Calculate motor values
+        int frontLeftValue  = vertical + horizontal + rotation;
+        int backLeftValue   = vertical - horizontal + rotation;
+        int frontRightValue = vertical - horizontal - rotation;
+        int backRightValue  = vertical + horizontal - rotation;
+
+        // Set motor speeds
+        frontLeft.move(frontLeftValue);
+        backLeft.move(backLeftValue);
+        frontRight.move(frontRightValue);
+        backRight.move(backRightValue);
+
+        // Prevent CPU hogging
+        pros::delay(20);
+    }
+}
+
+void disabled() {}
+void competition_initialize() {}
+
+// Callback for the center button on the LCD.
+void on_center_button() {
+    static bool pressed = false;
+    pressed = !pressed;
+    if (pressed) {
+        pros::lcd::set_text(2, "I was pressed!");
+    } else {
+        pros::lcd::clear_line(2);
+    }
+}
