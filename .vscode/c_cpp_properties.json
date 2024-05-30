@@ -3,15 +3,26 @@
     {
       "name": "windows-gcc-x64",
       "includePath": [
-        "${workspaceFolder}/**"
+        "${workspaceFolder}/**",
+        "/Users/sakethpoori/Documents/Saketh Macbook/projects/VEX U/VEXU/include"
       ],
-      "compilerPath": "gcc",
-      "cStandard": "${default}",
-      "cppStandard": "${default}",
-      "intelliSenseMode": "windows-gcc-x64",
+      "compilerPath": "/Users/sakethpoori/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/arm-none-eabi-g++",
+      "cStandard": "gnu11",
+      "cppStandard": "gnu++20",
+      "intelliSenseMode": "gcc-arm",
       "compilerArgs": [
         ""
-      ]
+      ],
+      "macFrameworkPath": [
+        "/System/Library/Frameworks"
+      ],
+      "browse": {
+        "path": [
+          "/Users/sakethpoori/Documents/Saketh Macbook/projects/VEX U/VEXU"
+        ],
+        "limitSymbolsToIncludedHeaders": true,
+        "databaseFilename": ""
+      }
     }
   ],
   "version": 4
