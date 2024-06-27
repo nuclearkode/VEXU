@@ -1,6 +1,8 @@
 #include "main.h"
 using namespace pros;
 using namespace std; // See if can remove the pros :: LCD thing
+#define VISION_PORT 13 
+#define EXAMPLE_SIG 1 
 
 void on_center_button();
 
@@ -18,10 +20,11 @@ void autonomous() {}
 void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
 	
-	pros::Vision vision_sensor (13);
+    // setting color signatures 
+	pros::Vision vision_sensor (VISION_PORT);
   	pros::vision_signature_s_t RED_SIG =
-    pros::Vision::signature_from_utility(1, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
-	vision_sensor.set_signature(1, &RED_SIG);
+    pros::Vision::signature_from_utility(EXAMPLE_SIG, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
+	vision_sensor.set_signature(EXAMPLE_SIG, &RED_SIG);
     vision_sensor.set_zero_point(pros::E_VISION_ZERO_CENTER);
 
     // Define the motors. Replace 'x' with your actual motor ports.
@@ -52,7 +55,8 @@ void opcontrol() {
         frontRight.move(frontRightValue);
         backRight.move(backRightValue);
 
-		pros::vision_signature_s_t rtn = vision_sensor.get_by_sig(13, 0, 1);
+        // retrieving objects by signature 
+		vision_object_s_t rtn = vision_sensor.get_by_sig(0, EXAMPLE_SIG);
     	// Gets the largest object of the EXAMPLE_SIG signature
     	std::cout << "sig: " << rtn.signature << std::endl;
    	    // Prints "sig: 1"
